@@ -1,0 +1,59 @@
+<h1>Alunos</h1>
+
+<section>
+  <h2>Novo aluno</h2>
+
+  <form (ngSubmit)="criar()">
+    <div>
+      <label for="nome">Nome</label>
+      <input [(ngModel)]="nome" name="nome" id="nome" required />
+    </div>
+
+    <div>
+      <label for="idade">Idade</label>
+      <input type="number" [(ngModel)]="idade" name="idade" id="idade" required />
+    </div>
+
+    <div>
+      <label for="curso">Curso</label>
+      <input [(ngModel)]="curso" name="curso" id="curso" required />
+    </div>
+
+    <div>
+      <label for="notas">Notas</label>
+      <input [(ngModel)]="notasCsv" name="notasCsv" id="notas" />
+    </div>
+
+    <button type="submit" [disabled]="salvando">Salvar</button>
+  </form>
+
+  @if (erro) {
+    <p style="color: red;">{{ erro }}</p>
+  }
+</section>
+
+<hr>
+
+<section>
+  <h2>Lista</h2>
+
+  <button (click)="carregar()" [disabled]="carregando">Recarregar</button>
+
+  @if (carregando) {
+    <p>Carregando....</p>
+  } @else {
+
+    @if (alunos.length === 0) {
+      <p>Nenhum aluno.</p>
+    } @else {
+  <ul>
+    @for (a of alunos; track a._id) {
+      <li>
+        <strong>{{ a.nome }}</strong> - {{ a.idade }} - {{ a.curso }}
+        <button (click)="excluir(a._id)">Excluir</button>
+      </li>
+    }
+  </ul>
+    }
+  }
+</section>
